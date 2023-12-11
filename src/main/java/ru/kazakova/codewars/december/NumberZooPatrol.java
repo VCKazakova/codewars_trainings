@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class NumberZooPatrol {
 
     /**
+     * https://www.codewars.com/kata/5276c18121e20900c0000235/solutions/java
      * You're working in a number zoo, and it seems that one of the numbers has gone missing!
      * <p>
      * Zoo workers have no idea what number is missing, and are too incompetent to figure it out,
@@ -30,6 +31,7 @@ public class NumberZooPatrol {
     // что делать, если передан пустой массив?
     // как улучшить перфоманс?
     public static int findMissingNumber(int[] numbers) {
+        // поиск перебором (долго)
         int[] sortedNumbers = Arrays.stream(numbers)
                 .sorted()
                 .toArray();
@@ -48,7 +50,22 @@ public class NumberZooPatrol {
         return sortedNumbers[sortedNumbers.length - 1] + 1;
     }
 
-        public static void main (String[]args){
+    public static int findMissingNumberPerfomance(int[] numbers) {
+        // определение числа элементов массива вместе с пропущенным (длина массива + 1)
+        int n = numbers.length + 1;
+
+        // вычисляет ожидаемую сумму элементов от 1 до n по формуле для суммы арифметической прогрессии
+        long expectedSum = (long)n * (n + 1) / 2;
+
+        // Вычисляем сумму массива
+        long actualSum = Arrays.stream(numbers).asLongStream().sum();
+
+        // Разница между ожидаемой и фактической суммой даст нам недостающее число
+        return (int)(expectedSum - actualSum);
+    }
+
+
+    public static void main (String[]args){
             System.out.println(findMissingNumber(new int[]{1, 2, 3, 5}));
             System.out.println(findMissingNumber(new int[]{13, 11, 10, 3, 2, 1, 4, 5, 6, 9, 7, 8}));
         }
