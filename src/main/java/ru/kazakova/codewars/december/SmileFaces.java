@@ -47,10 +47,10 @@ public class SmileFaces {
         for (String smile : arr) {
             if ((smile.startsWith(":") || smile.startsWith(";"))
                     && (smile.endsWith(")") || smile.endsWith("D"))
-                    && (smile.length() == 2 || smile.length() == 3)) {
+                    && (smile.length() == 2 || (smile.length() == 3 &&
+                    (smile.contains("-") || smile.contains("~"))))) {
                 numbers++;
             }
-
         }
         return numbers;
     }
@@ -62,12 +62,21 @@ public class SmileFaces {
         a.add(":-}");
         a.add(":-()");
 
-        System.out.println(countSmileys(a));
+        List<String> a2 = new ArrayList<>();
+        a2.add(":)");
+        a2.add(":)");
+        a2.add("x-]");
+        a2.add(":ox");
+        a2.add(";-(");
+        a2.add(";-)");
+        a2.add(";~(");
+        a2.add(":~D");
 
-        /**
-         * The Array [:), (~D, :), pdop, ;), pd, 4D, :DD, '-~D, :2d, :px, :D, 4~), ;8X, o~P, ;X, 5-x, 'dD, :dd, ~od,
-         * ;~P, ;), '-D, ;dp, 4P, o-), ~(P, ;D, ;~d, ;x, ;~d, (x, 5dd, ;p, ;D] has expected:<7> but was:<8>
-         */
+        List<String> biglist = List.of(":)", "(~D", ":)", "pdop", ";)", "pd", "4D", ":DD", "-~D", ":2d", ":px", ":D",
+                "4~)", ";8X", "o~P", ";X", "5-x", "'dD", ":dd", "~od", ";~P", ";)", "'-D", ";dp", "4P", "o-)", "~(P",
+                ";D", ";~d", "(x", "5dd", ";p", ";D");
+
+        System.out.println(countSmileys(biglist));
     }
 
 }
