@@ -1,7 +1,11 @@
 package ru.kazakova.codewars.december;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Objects.nonNull;
 
 public class ConsonantValue {
 
@@ -55,7 +59,6 @@ public class ConsonantValue {
     // из строки убрать гласные
     // найти подстроки с максимальной суммой в строке
     public static int solve(final String s) {
-
         // определили мапу с числами
         Map<String, Integer> letterMap = new HashMap<>();
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -64,29 +67,52 @@ public class ConsonantValue {
             int position = i + 1;
             letterMap.put(String.valueOf(consonant), position);
         }
-
         // понять какие числа есть в строке
         // сплит строки на подстроки по гласным
         String[] split = s.split("[aeiouAEIOU]+");
         // перебираем подстроки и находим суммы для каждой
         // создаем мапу, в которую складываем - подстроку и сумму
         Map<String, Integer> stringSums = new HashMap<>();
-        for (String e : split) {
-            if (e.length() == 1) {
-                stringSums.put(e, letterMap.get(e));
+        for (String elementOfSplit : split) {
+            if (elementOfSplit.length() == 1) {
+                stringSums.put(elementOfSplit, letterMap.get(elementOfSplit));
             } else {
                 // ключ - подстрока
                 // значение - сумма букв
-//                Integer sum = 0;
-//                e.chars()
-//                        .map(r -> sum.)
+                // делаем сплит длинной строки
+                int sum = 0;
+                String[] splitOfSeveralLetters = elementOfSplit.split("");
+                for (String elementOfBigString : splitOfSeveralLetters) {
+                    Integer numberOfLetter = letterMap.get(elementOfBigString);
+                    if (nonNull(numberOfLetter)) {
+                        sum = sum + numberOfLetter;
+                    }
+                }
+                stringSums.put(elementOfSplit, sum);
             }
         }
-        return 0;
+        Optional<Integer> first = stringSums.values()
+                .stream()
+                .sorted(Comparator.reverseOrder())
+                .findFirst();
+
+        return first.orElse(0);
     }
 
     public static void main(String[] args) {
-        solve("zodiacs");
+        System.out.println(solve("chruschtschov"));
+        System.out.println(solve("khrushchev"));
+        System.out.println(solve("strength"));
+        System.out.println(solve("catchphrase"));
+        System.out.println(solve("twelfthstreet"));
+        System.out.println(solve("mischtschenkoana"));
+
+//        Tester.doTest("chruschtschov", 80);
+//        Tester.doTest("khrushchev", 38);
+//        Tester.doTest("strength", 57);
+//        Tester.doTest("catchphrase", 73);
+//        Tester.doTest("twelfthstreet", 103);
+//        Tester.doTest("mischtschenkoana", 80);
     }
 
 }
