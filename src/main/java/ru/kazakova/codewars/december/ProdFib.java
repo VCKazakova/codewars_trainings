@@ -55,13 +55,52 @@ public class ProdFib {
      * которое указывает, является ли произведение этих двух чисел равным prod.
      */
 
+    // на входе число, у которого нужно найти множители для этого числа
+    // если множетили этого числа - последовательные числа фибоначи, вернуть их и 1
+    // если нет, то вернуть их и 0
     public static long[] productFib(long prod) {
         // your code
         return null;
     }
 
-    public static void main(String[] args) {
+    // найти наибольшие множители
+    public static void findLargestFactors(long number) {
+        long factor1 = 1;
+        long factor2 = 1;
 
+        for (long i = 2; i <= Math.sqrt(number); i++) {
+            while (number % i == 0) {
+                factor1 = i;
+                number /= i;
+            }
+        }
+
+        if (number > 1 && number > factor1) {
+            factor2 = number;
+        }
+
+        if (factor1 != 1 && factor2 != 1) {
+            System.out.println(factor1 + " и " + factor2);
+        } else {
+            System.out.println("Для заданного числа не удалось найти два самых больших множителя.");
+        }
+    }
+
+    // на вход порядковый номер числа фибоначи
+    // возвращает число фибоначи по счету
+    public static long fibonacci(int n) {
+        if (n <= 0) {
+            return 0;
+        } else if (n <= 1) {
+            return 1;
+        } else {
+            return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+    }
+
+    public static void main(String[] args) {
+//        System.out.println(fibonacci(10));
+        findLargestFactors(800);
     }
 
 }
