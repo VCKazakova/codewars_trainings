@@ -64,32 +64,29 @@ public class BuyCar {
             int economy = startPriceOld - startPriceNew;
             return new int[]{0, economy};
         }
-        int month = 0;
+        int month = 1;
         double savings = -savingperMonth;
         double sumBeforeBuy = 0;
+        double startPriceOldMinusPercent = startPriceOld;
+        double startPriceNewMinusPercent = startPriceNew;
+        double moneyBox = savingperMonth;
+        double complexPercent = percentLossByMonth;
         while (savings < 0) {
             // считаем по percentLossByMonth
-            if (month == 0 || month % 2 != 0) {
-                double startPriceOldMinusPercent = startPriceOld - ((startPriceOld * percentLossByMonth) / 100);
-                double startPriceNewMinusPercent = startPriceNew - ((startPriceNew * percentLossByMonth) / 100);
-                sumBeforeBuy = startPriceNewMinusPercent - startPriceOldMinusPercent - savingperMonth;
-                if (sumBeforeBuy > 0) {
-                    month++;
-                    savings = -sumBeforeBuy;
-                } else {
-                    return new int[]{month, (int) sumBeforeBuy};
-                }
+            if (month % 2 == 0) {
+                complexPercent = complexPercent + 0.5;
+            }
+            startPriceOldMinusPercent =
+                    startPriceOldMinusPercent - ((startPriceOldMinusPercent * complexPercent) / 100);
+            startPriceNewMinusPercent =
+                    startPriceNewMinusPercent - ((startPriceNewMinusPercent * complexPercent) / 100);
+            sumBeforeBuy = startPriceNewMinusPercent - startPriceOldMinusPercent - moneyBox;
+            if (sumBeforeBuy > 0) {
+                moneyBox = moneyBox + savingperMonth;
+                month++;
+                savings = -sumBeforeBuy;
             } else {
-                double percent = percentLossByMonth + 0.5;
-                double startPriceOldMinusPercent = (startPriceOld * (percent / 100)) / 100;
-                double startPriceNewMinusPercent = (startPriceNew * (percent / 100)) / 100;
-                sumBeforeBuy = startPriceNewMinusPercent - startPriceOldMinusPercent - savingperMonth;
-                if (sumBeforeBuy > 0) {
-                    month++;
-                    savings = -sumBeforeBuy;
-                } else {
-                    return new int[]{month, (int) sumBeforeBuy};
-                }
+                return new int[]{month, (int) Math.round(-sumBeforeBuy)};
             }
         }
         return new int[0];
@@ -97,6 +94,7 @@ public class BuyCar {
 
     public static void main(String[] args) {
         System.out.println(Arrays.toString(nbMonths(2000, 8000, 1000, 1.5)));
+        System.out.println(Arrays.toString(nbMonths(12000, 8000, 1000, 1.5)));
     }
 
 }
