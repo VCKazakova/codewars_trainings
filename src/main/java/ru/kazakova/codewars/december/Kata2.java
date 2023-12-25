@@ -13,12 +13,25 @@ public class Kata2 {
      * solution('abc', 'd') // returns false
      */
 
+    // если строка заканчивается второй переданной строкой - вернуть true
     public static boolean solution(String str, String ending) {
+        // сделать подстроку такой же длины как и конец
+        // сравнить строки
+        int lengthOfEndString = ending.length();
+        int lengthOfString = str.length();
+        int lengthOfSub = lengthOfString - lengthOfEndString;
+        if (lengthOfSub == 0) {
+            return str.equals(ending);
+        }
+        if (lengthOfSub > 0) {
+            String substring = str.substring(lengthOfSub);
+            return substring.equals(ending);
+        }
         return false;
     }
 
     public static void main(String[] args) {
-
+        System.out.println(solution("abc", "bc"));
     }
 
 }
