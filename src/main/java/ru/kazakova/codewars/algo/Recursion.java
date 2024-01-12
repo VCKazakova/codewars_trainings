@@ -15,6 +15,14 @@ public class Recursion {
         return number * getFactorial(number - 1);
     }
 
+    /**
+     * Рекурсивная функцию для вычисления суммы
+     * элементов целочисленного массива.
+     */
+    public static long sumOfArrayElements(int[] ints) {
+        return 0;
+    }
+
     public static void main(String[] args) {
         System.out.println(getFactorial(1));
         System.out.println(getFactorial(5));
