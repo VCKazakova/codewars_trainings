@@ -9,8 +9,8 @@ public class Recursion {
      * прописываем рекурсию
      * */
     public static long getFactorial(int number) {
-        if (1 == number) {
-            return number;
+        if (1 == number || 0 == number) {
+            return 1;
         }
         return number * getFactorial(number - 1);
     }
