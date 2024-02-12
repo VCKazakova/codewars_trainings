@@ -14,6 +14,10 @@ public class Arrays {
         System.out.println(findInt(new int[]{
                 4, 4, 6, 8, 9, 9, 8
         }));
+
+        System.out.println(findUnique(new int[]{
+                4, 4, 6, 8, 9, 9, 8
+        }));
     }
 
     public static int findInt(int[] intArray) {
@@ -27,6 +31,14 @@ public class Arrays {
             i++;
         }
         return ints[ints.length - 1];
+    }
+
+    public static int findUnique(int[] arr) {
+        int result = 0;
+        for (int num : arr) {
+            result ^= num;
+        }
+        return result;
     }
 
 }
