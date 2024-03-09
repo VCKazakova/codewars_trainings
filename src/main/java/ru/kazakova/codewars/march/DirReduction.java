@@ -1,5 +1,9 @@
 package ru.kazakova.codewars.march;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DirReduction {
 
     /**
@@ -68,8 +72,51 @@ public class DirReduction {
 
 
     public static String[] dirReduc(String[] arr) {
-        // Your code here.
-        return new String[] {};
+        // выделяем условия при которых точно вернуться пустые ответы
+        if (arr.length == 0 || Arrays.equals(arr, new String[]{"NORTH", "SOUTH", "EAST", "WEST"})) {
+            return new String[]{};
+        } else if (arr.length == 2) {
+            if (("NORTH".equals(arr[0]) && "SOUTH".equals(arr[1])) || ("EAST".equals(
+                    arr[0]) && "WEST".equals(arr[01]))) {
+                List<String> list = new ArrayList<>(Arrays.asList(arr));
+                list.remove(1);
+                list.remove(0);
+                return list.toArray(new String[0]);
+            }
+        }
+        // посмотреть направления попарно, и если они противоположные - удалить
+        List<String> list = new ArrayList<>(Arrays.asList(arr));
+        for (int i = list.size() - 1; i > 0; i--) {
+            String current = list.get(i);
+            String next = list.get(i - 1);
+            if (("NORTH".equals(current) && "SOUTH".equals(next)) || ("EAST".equals(
+                    current) && "WEST".equals(next))
+                    || ("SOUTH".equals(current) && "NORTH".equals(next))
+                    || ("WEST".equals(current) && "EAST".equals(next))) {
+                list.remove(current);
+                list.remove(next);
+                System.out.println("cur list " + list);
+            }
+        }
+        return list.toArray(new String[0]);
     }
+
+    public static void main(String[] args) {
+//        assertArrayEquals("\"NORTH\", \"SOUTH\", \"SOUTH\", \"EAST\", \"WEST\", \"NORTH\", \"WEST\"",
+//                new String[]{"WEST"},
+//                DirReduction.dirReduc(new String[]{"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"}));
+//        assertArrayEquals("\"NORTH\",\"SOUTH\",\"SOUTH\",\"EAST\",\"WEST\",\"NORTH\"",
+//                new String[]{},
+//                DirReduction.dirReduc(new String[]{"NORTH","SOUTH","SOUTH","EAST","WEST","NORTH"}));
+        String[] array = {"NORTH", "SOUTH", "SOUTH", "EAST", "WEST", "NORTH", "WEST"};
+        String[] array2 = {"NORTH", "SOUTH", "EAST"};
+//        System.out.println(array.length);
+        System.out.println(Arrays.toString(dirReduc(array2)));
+//        System.out.println(Arrays.toString(dirReduc(new String[]{"NORTH, SOUTH, SOUTH, EAST, WEST, NORTH"})));
+    }
+
+    // || ("SOUTH".equals(current) && "NORTH".equals(
+    //        next)) || ("WEST".equals(
+    //        current) && "EAST".equals(next))
 
 }
