@@ -3,6 +3,7 @@ package ru.kazakova.codewars.march;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -72,9 +73,28 @@ public class NewKata {
         return "";
     }
 
+    public static String firstNonRepeatingLetter2(String s) {
+        Map<Character, Integer> letterOccurrences = new HashMap<>();
+
+        // Подсчитываем количество вхождений каждой буквы в строке
+        for (char c : s.toLowerCase(Locale.ROOT).toCharArray()) {
+            letterOccurrences.put(c, letterOccurrences.getOrDefault(c, 0) + 1);
+        }
+
+        // Находим первую букву с одним вхождением
+        for (char c : s.toLowerCase(Locale.ROOT).toCharArray()) {
+            if (letterOccurrences.get(c) == 1) {
+                return String.valueOf(c);
+            }
+        }
+
+        return "";
+    }
+
 
     public static void main(String[] args) {
         System.out.println(firstNonRepeatingLetter("moonmoon"));
+        System.out.println(firstNonRepeatingLetter2("moonmoon"));
     }
 
 }
